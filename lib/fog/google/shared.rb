@@ -115,7 +115,8 @@ module Fog
         application_name = app_name.nil? ? "fog" : "#{app_name}/#{app_version || '0.0.0'} fog"
         api_client_options = {
           :application_name => application_name,
-          :application_version => Fog::Google::VERSION
+          :application_version => Fog::Google::VERSION,
+          :proxy => google_client_options[:proxy]
         }
         client = ::Google::APIClient.new(api_client_options)
 
@@ -126,8 +127,7 @@ module Fog
           :issuer => google_client_email,
           :scope => google_api_scope_url,
           :signing_key => signing_key,
-          :token_credential_uri => "https://accounts.google.com/o/oauth2/token",
-          :google_client_options => google_client_options
+          :token_credential_uri => "https://accounts.google.com/o/oauth2/token"
         )
         client.authorization.fetch_access_token!
 
